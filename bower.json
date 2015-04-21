@@ -1,0 +1,8 @@
+{
+"name": "Tom_blog",
+"version": "0.0.1",
+"description": "Tom_blog is a private blog for Tom and his friends. It's also a free, open-source Markdown editor;",
+"dependencies": {
+  "bootstrap": "3.0.3"
+  }
+}
