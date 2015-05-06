@@ -2,7 +2,7 @@
 
 var app = require('../index')
 
-var config = require('../config');
+var config = require('../conf/config');
 
 var server = app.listen(
     process.env.PORT || config['web'].port || 3000,

@@ -1,8 +1,13 @@
 {
-"name": "Tom_blog",
-"version": "0.0.1",
-"description": "Tom_blog is a private blog for Tom and his friends. It's also a free, open-source Markdown editor;",
-"dependencies": {
-  "bootstrap": "3.0.3"
+  "name": "Tom_blog",
+  "version": "0.0.1",
+  "description": "Tom_blog is a private blog for Tom and his friends. It's also a free, open-source Markdown editor;",
+  "dependencies": {
+    "bootstrap": "~3.3.4",
+    "jquery": "~2.1.3",
+    "ace-builds": "~1.1.9",
+    "marked": "~0.3.3",
+    "MathJax": "~2.5.3",
+    "highlightjs": "~8.5.0"
   }
 }

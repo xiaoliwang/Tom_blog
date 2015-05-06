@@ -5,9 +5,9 @@
 var koa = require('koa');
 
 var middlewares = require('./lib/middlewares');
-    //controller = require('./controller');
+    controller = require('./controller');
 
 var app = module.exports = koa();
 
 middlewares(app);
-//controller(app);
+controller(app);

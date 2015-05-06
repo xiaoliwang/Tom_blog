@@ -1,4 +1,6 @@
 /.git/*
 /.idea/*
 /node_modules/*
-/config.js
+/conf/config.js
+/note/*
+/public/res/bower-libs/*

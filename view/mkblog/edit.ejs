@@ -1,0 +1,93 @@
+<style type="text/css">
+    #markdown-editor {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 50%;
+    }
+    #markdown-preview{
+        position:fixed;
+        top:0;
+        right:0;
+        bottom:0;
+        left:50%;
+        width:50%;
+        height:auto;
+        overflow:auto;
+    }
+</style>
+
+<!-- 编辑器 -->
+<div id="markdown-editor"></div>
+<!-- 预览界面 -->
+<div id="markdown-preview"></div>
+
+<script>
+window.onload = (function(){
+    //ace的设置
+    //设置编辑器位置
+    var editor = ace.edit("markdown-editor");
+    //设置皮肤和语言
+    editor.setTheme("ace/theme/twilight");
+    editor.getSession().setMode("ace/mode/markdown");
+    //设置编辑器字体大小
+    document.getElementById('markdown-editor').style.fontSize='20px';
+
+    //mathjax的设置
+    var math = document.getElementById("markdown-preview");
+
+    var trigger = {};
+
+    editor.getSession().on('change',function(e){
+        if(trigger){
+            clearTimeout(trigger);
+        }
+
+        trigger = setTimeout(function(){
+            //获取初始文本
+            var value = editor.getValue();
+            //marked渲染
+            var afterMarked = marked_extra.ext_gen_html(value);
+            $("#markdown-preview").html(afterMarked);
+            //mathjax渲染
+            //MathJax.Hub.Queue(["Typeset",MathJax.Hub,math]);
+        },1000);
+    });
+
+})();
+
+    //ACE××××××××××××××××××××××××××××××××××××××××××××××××××××××
+
+    //设值和取值
+    //editor.setValue("the new text here"); // or session.setValue
+    //editor.getValue(); // or session.getValue
+
+    //获取选中区域
+    //editor.session.getTextRange(editor.getSelectionRange());
+
+    //光标后插入
+    //editor.insert("Something cool");
+
+    //获取光标位置
+    //editor.selection.getCursor();
+
+    //去到第几行
+    //editor.gotoLine(int lineNumber);
+
+    //获取所有行数
+    //editor.session.getLength();
+
+    //设置tab的大小
+    //editor.getSession().setTabSize(4);
+
+    //设置只读
+    //editor.setReadOnly(true);
+
+    //editor.getSession().setUseSoftTabs(true);
+    // editor.getSession().setUseWrapMode(true);
+    // editor.setHighlightActiveLine(true);
+    // editor.setShowPrintMargin(true);
+
+</script>
