@@ -26,7 +26,8 @@
 
 <script>
 window.onload = (function(){
-    //ace的设置
+
+    //////////////////////////////////ace的设置////////////////////
     //设置编辑器位置
     var editor = ace.edit("markdown-editor");
     //设置皮肤和语言
@@ -35,24 +36,34 @@ window.onload = (function(){
     //设置编辑器字体大小
     document.getElementById('markdown-editor').style.fontSize='20px';
 
-    //mathjax的设置
+    //////////////////////////////////////mathjax的设置////////////////////
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['`$','$`']]}
+    });
     var math = document.getElementById("markdown-preview");
 
-    var trigger = {};
+    ///////////////////////////////////////marked的设置////////////////////
+    marked.setOptions({
+        highlight : function(code){
+            return hljs.highlightAuto(code).value;
+        }
+    });
 
+    /////////////////////////////////////开始监听//////////////////////////
+    var trigger = {};
     editor.getSession().on('change',function(e){
         if(trigger){
             clearTimeout(trigger);
         }
-
         trigger = setTimeout(function(){
             //获取初始文本
             var value = editor.getValue();
             //marked渲染
-            var afterMarked = marked_extra.ext_gen_html(value);
+            var afterMarked = marked(value);
             $("#markdown-preview").html(afterMarked);
+            toc("#markdown-preview");
             //mathjax渲染
-            //MathJax.Hub.Queue(["Typeset",MathJax.Hub,math]);
+            MathJax.Hub.Queue(["Typeset",MathJax.Hub,math]);
         },1000);
     });
 
