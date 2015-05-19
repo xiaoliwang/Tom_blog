@@ -8,6 +8,7 @@
     "ace-builds": "~1.1.9",
     "marked": "~0.3.3",
     "MathJax": "~2.5.3",
-    "highlightjs": "~8.5.0"
+    "highlightjs": "~8.5.0",
+    "marked-extra": "*"
   }
 }
