@@ -32,7 +32,7 @@ var toc;
                 point = value[0];
             }
             contents += '<li><a href="#'
-            + marked?marked.defaults.headerPrefix:"";
+            + (marked?marked.defaults.headerPrefix:"")
             + value[1].toLowerCase().replace(/[^\S]+/g, '-')
             + '">'+value[1]+'</a></li>';
         });

@@ -1,75 +1,76 @@
 /**
- * Created by ½ÜÅó on 2015/5/20.
+ * Created by ï¿½ï¿½ï¿½ï¿½ on 2015/5/20.
  */
 $(function(){
-    //////////////////////////////////aceµÄÉèÖÃ////////////////////
-    //ÉèÖÃ±à¼­Æ÷Î»ÖÃ
+    //////////////////////////////////aceï¿½ï¿½ï¿½ï¿½ï¿½ï¿½////////////////////
+    //ï¿½ï¿½ï¿½Ã±à¼­ï¿½ï¿½Î»ï¿½ï¿½
     var editor = ace.edit("md-editor");
-    //ÉèÖÃÆ¤·ôºÍÓïÑÔ
+    //ï¿½ï¿½ï¿½ï¿½Æ¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     editor.setTheme("ace/theme/twilight");
     editor.getSession().setMode("ace/mode/markdown");
-    editor.getSession().setUseWrapMode(true);//×Ô¶¯»»ÐÐ
-    //ÉèÖÃ±à¼­Æ÷×ÖÌå´óÐ¡
+    editor.getSession().setUseWrapMode(true);//ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½
+    //ï¿½ï¿½ï¿½Ã±à¼­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡
     document.getElementById('md-editor').style.fontSize='20px';
 
-    //////////////////////////////////////mathjaxµÄÉèÖÃ////////////////////
+    //////////////////////////////////////mathjaxï¿½ï¿½ï¿½ï¿½ï¿½ï¿½////////////////////
     MathJax.Hub.Config({
         tex2jax: {inlineMath: [['$','$']]}
     });
     var math = document.getElementById("md-preview");
 
-    ///////////////////////////////////////markedµÄÉèÖÃ////////////////////
+    ///////////////////////////////////////markedï¿½ï¿½ï¿½ï¿½ï¿½ï¿½////////////////////
     marked.setOptions({
         highlight : function(code){
             return hljs.highlightAuto(code).value;
         }
     });
 
-    /////////////////////////////////////¿ªÊ¼¼àÌý//////////////////////////
+    /////////////////////////////////////ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½//////////////////////////
     var trigger = {};
     editor.getSession().on('change',function(e){
         if(trigger){
             clearTimeout(trigger);
         }
         trigger = setTimeout(function(){
-            //»ñÈ¡³õÊ¼ÎÄ±¾
+            //ï¿½ï¿½È¡ï¿½ï¿½Ê¼ï¿½Ä±ï¿½
             var value = editor.getValue();
-            //markedäÖÈ¾
+            //markedï¿½ï¿½È¾
             var afterMarked = marked(value);
+            afterMarked+="<div style=â€clear:both;â€></div>";
             $("#md-preview").html(afterMarked);
             toc("#md-preview");
-            //mathjaxäÖÈ¾
+            //mathjaxï¿½ï¿½È¾
             MathJax.Hub.Queue(["Typeset",MathJax.Hub,math]);
         },1000);
     });
 
 });
 
-//ACE¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á
+//ACEï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-//ÉèÖµºÍÈ¡Öµ
+//ï¿½ï¿½Öµï¿½ï¿½È¡Öµ
 //editor.setValue("the new text here"); // or session.setValue
 //editor.getValue(); // or session.getValue
 
-//»ñÈ¡Ñ¡ÖÐÇøÓò
+//ï¿½ï¿½È¡Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //editor.session.getTextRange(editor.getSelectionRange());
 
-//¹â±êºó²åÈë
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //editor.insert("Something cool");
 
-//»ñÈ¡¹â±êÎ»ÖÃ
+//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Î»ï¿½ï¿½
 //editor.selection.getCursor();
 
-//È¥µ½µÚ¼¸ÐÐ
+//È¥ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½
 //editor.gotoLine(int lineNumber);
 
-//»ñÈ¡ËùÓÐÐÐÊý
+//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //editor.session.getLength();
 
-//ÉèÖÃtabµÄ´óÐ¡
+//ï¿½ï¿½ï¿½ï¿½tabï¿½Ä´ï¿½Ð¡
 //editor.getSession().setTabSize(4);
 
-//ÉèÖÃÖ»¶Á
+//ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½
 //editor.setReadOnly(true);
 
 //editor.getSession().setUseSoftTabs(true);
