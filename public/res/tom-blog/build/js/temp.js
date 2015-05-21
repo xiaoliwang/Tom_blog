@@ -9,7 +9,7 @@ $(function(){
     editor.setTheme("ace/theme/twilight");
     editor.getSession().setMode("ace/mode/markdown");
     editor.getSession().setUseWrapMode(true);//自动换行
-    //设置编辑器字体大小
+    //设置编辑字体大小
     document.getElementById('md-editor').style.fontSize='20px';
 
     //////////////////////////////////////mathjax的设置////////////////////
@@ -36,6 +36,7 @@ $(function(){
             var value = editor.getValue();
             //marked渲染
             var afterMarked = marked(value);
+            afterMarked+="<div style=”clear:both;”></div>";
             $("#md-preview").html(afterMarked);
             toc("#md-preview");
             //mathjax渲染
@@ -45,7 +46,7 @@ $(function(){
 
 });
 
-//ACE××××××××××××××××××××××××××××××××××××××××××××××××××××××
+//ACE
 
 //设值和取值
 //editor.setValue("the new text here"); // or session.setValue

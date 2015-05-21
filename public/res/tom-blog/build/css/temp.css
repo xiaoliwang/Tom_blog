@@ -21,11 +21,15 @@
     background-color: #444;
 }
 
+.md-nav ul {
+
+}
+
 #md-editor {
     position: absolute;
+    top: 50px;
     height: 100%;
     width: 100%;
-    overflow:auto;
 }
 
 #md-preview {
@@ -33,5 +37,9 @@
     top: 50px;
     height: 100%;
     width: 100%;
-    overflow:auto;
+    overflow: auto;
+}
+
+.footnotes {
+    margin-bottom: 20px;
 }
