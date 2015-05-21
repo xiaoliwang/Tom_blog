@@ -1,75 +1,75 @@
 /**
- * Created by ½ÜÅó on 2015/5/20.
+ * Created by æ°æœ‹ on 2015/5/20.
  */
 $(function(){
-    //////////////////////////////////aceµÄÉèÖÃ////////////////////
-    //ÉèÖÃ±à¼­Æ÷Î»ÖÃ
+    //////////////////////////////////aceçš„è®¾ç½®////////////////////
+    //è®¾ç½®ç¼–è¾‘å™¨ä½ç½®
     var editor = ace.edit("md-editor");
-    //ÉèÖÃÆ¤·ôºÍÓïÑÔ
+    //è®¾ç½®çš®è‚¤å’Œè¯­è¨€
     editor.setTheme("ace/theme/twilight");
     editor.getSession().setMode("ace/mode/markdown");
-    editor.getSession().setUseWrapMode(true);//×Ô¶¯»»ĞĞ
-    //ÉèÖÃ±à¼­Æ÷×ÖÌå´óĞ¡
+    editor.getSession().setUseWrapMode(true);//è‡ªåŠ¨æ¢è¡Œ
+    //è®¾ç½®ç¼–è¾‘å™¨å­—ä½“å¤§å°
     document.getElementById('md-editor').style.fontSize='20px';
 
-    //////////////////////////////////////mathjaxµÄÉèÖÃ////////////////////
+    //////////////////////////////////////mathjaxçš„è®¾ç½®////////////////////
     MathJax.Hub.Config({
         tex2jax: {inlineMath: [['$','$']]}
     });
     var math = document.getElementById("md-preview");
 
-    ///////////////////////////////////////markedµÄÉèÖÃ////////////////////
+    ///////////////////////////////////////markedçš„è®¾ç½®////////////////////
     marked.setOptions({
         highlight : function(code){
             return hljs.highlightAuto(code).value;
         }
     });
 
-    /////////////////////////////////////¿ªÊ¼¼àÌı//////////////////////////
+    /////////////////////////////////////å¼€å§‹ç›‘å¬//////////////////////////
     var trigger = {};
     editor.getSession().on('change',function(e){
         if(trigger){
             clearTimeout(trigger);
         }
         trigger = setTimeout(function(){
-            //»ñÈ¡³õÊ¼ÎÄ±¾
+            //è·å–åˆå§‹æ–‡æœ¬
             var value = editor.getValue();
-            //markedäÖÈ¾
+            //markedæ¸²æŸ“
             var afterMarked = marked(value);
             $("#md-preview").html(afterMarked);
             toc("#md-preview");
-            //mathjaxäÖÈ¾
+            //mathjaxæ¸²æŸ“
             MathJax.Hub.Queue(["Typeset",MathJax.Hub,math]);
         },1000);
     });
 
 });
 
-//ACE¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á¡Á
+//ACEÃ—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—Ã—
 
-//ÉèÖµºÍÈ¡Öµ
+//è®¾å€¼å’Œå–å€¼
 //editor.setValue("the new text here"); // or session.setValue
 //editor.getValue(); // or session.getValue
 
-//»ñÈ¡Ñ¡ÖĞÇøÓò
+//è·å–é€‰ä¸­åŒºåŸŸ
 //editor.session.getTextRange(editor.getSelectionRange());
 
-//¹â±êºó²åÈë
+//å…‰æ ‡åæ’å…¥
 //editor.insert("Something cool");
 
-//»ñÈ¡¹â±êÎ»ÖÃ
+//è·å–å…‰æ ‡ä½ç½®
 //editor.selection.getCursor();
 
-//È¥µ½µÚ¼¸ĞĞ
+//å»åˆ°ç¬¬å‡ è¡Œ
 //editor.gotoLine(int lineNumber);
 
-//»ñÈ¡ËùÓĞĞĞÊı
+//è·å–æ‰€æœ‰è¡Œæ•°
 //editor.session.getLength();
 
-//ÉèÖÃtabµÄ´óĞ¡
+//è®¾ç½®tabçš„å¤§å°
 //editor.getSession().setTabSize(4);
 
-//ÉèÖÃÖ»¶Á
+//è®¾ç½®åªè¯»
 //editor.setReadOnly(true);
 
 //editor.getSession().setUseSoftTabs(true);
