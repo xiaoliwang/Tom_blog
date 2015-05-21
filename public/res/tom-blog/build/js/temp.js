@@ -44,6 +44,23 @@ $(function(){
         },1000);
     });
 
+//////////////////////////////////////////////工具栏////////////////////////////////////////////////////
+    //字体加粗
+    $(".glyphicon-bold").click(function(){
+        var selectRange = editor.getSelectionRange();
+        var selectVal = editor.session.getTextRange(selectRange);
+        if(selectVal){
+            editor.insert("**"+selectVal+"**");
+        }else{
+            var cursor_position = editor.selection.getCursor();
+            var temp_column = cursor_position.column;
+            var temp_row = cursor_position.row;
+            selectRange.setStart(temp_row, temp_column+2);
+            selectRange.setEnd(temp_row, temp_column+6);
+            editor.insert("**粗体文本**");
+            editor.selection.setSelectionRange(selectRange, true);
+        }
+    });
 });
 
 //ACE
