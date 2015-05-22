@@ -48,19 +48,42 @@ $(function(){
     //字体加粗
     $(".glyphicon-bold").click(function(){
         var selectRange = editor.getSelectionRange();
-        var selectVal = editor.session.getTextRange(selectRange);
-        if(selectVal){
-            editor.insert("**"+selectVal+"**");
-        }else{
-            var cursor_position = editor.selection.getCursor();
-            var temp_column = cursor_position.column;
-            var temp_row = cursor_position.row;
-            selectRange.setStart(temp_row, temp_column+2);
-            selectRange.setEnd(temp_row, temp_column+6);
-            editor.insert("**粗体文本**");
-            editor.selection.setSelectionRange(selectRange, true);
-        }
+        selectRange.column = selectRange.column-1;
+        editor.selection.addRange(selectRange);
+        editor.focus();
     });
+
+    /*$(".glyphicon-bold").click(function(){
+        //获取选取位置的range
+        var selectRange = editor.getSelectionRange();
+        //获取range中的值
+        var selectVal = editor.session.getTextRange(selectRange);
+        selectVal = selectVal.replace(/\n/g,'');
+        if(selectVal.replace(/\s/g,'')){
+            if(1) {
+                editor.insert(selectVal);
+                var n_c_column = cursor_position.column;
+                var n_c_column = cursor_position.column;
+                var n_c_row = cursor_position.row;
+                selectRange.setStart(n_c_row, n_c_column - selectVal.length);
+                selectRange.setEnd(n_c_row, n_c_column);
+                editor.selection.setSelectionRange(bigRange, true);
+            } else{
+                editor.insert("**"+selectVal+"**");
+                var n_c_column = cursor_position.column;
+                var n_c_column = cursor_position.column;
+                var n_c_row = cursor_position.row;
+                selectRange.setStart(n_c_row, n_c_column - selectVal.length - 2);
+                selectRange.setEnd(n_c_row, n_c_column - 2);
+                editor.selection.setSelectionRange(bigRange, true);
+            }
+        }else{
+            //editor.insert("**粗体文本**");
+            editor.moveCursorTo(0,1, false);
+            editor.selection.moveCursorTo(0,2,true);
+            editor.focus();
+        }
+    });*/
 });
 
 //ACE
