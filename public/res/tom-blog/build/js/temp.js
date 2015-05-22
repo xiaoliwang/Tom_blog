@@ -36,11 +36,21 @@ $(function(){
             var value = editor.getValue();
             //marked渲染
             var afterMarked = marked(value);
-            afterMarked+="<div style=”clear:both;”></div>";
             $("#md-preview").html(afterMarked);
             toc("#md-preview");
             //mathjax渲染
             MathJax.Hub.Queue(["Typeset",MathJax.Hub,math]);
+            //sequence-diagram序列图渲染
+            $(".lang-seq").sequenceDiagram({theme: 'hand'});
+            $(".lang-flow").each(function(index,flow){
+                var id = 'flow' + index;
+                flow = $(flow);
+                var str_flow = flow.text();
+                flow.attr('id', id);
+                flow.html('');
+                var diagram = flowchart.parse(str_flow);
+                diagram.drawSVG(id);
+            });
         },1000);
     });
 
@@ -48,9 +58,6 @@ $(function(){
     //字体加粗
     $(".glyphicon-bold").click(function(){
         var selectRange = editor.getSelectionRange();
-        selectRange.column = selectRange.column-1;
-        editor.selection.addRange(selectRange);
-        editor.focus();
     });
 
     /*$(".glyphicon-bold").click(function(){

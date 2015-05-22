@@ -8,6 +8,8 @@
     "ace-builds": "~1.1.9",
     "MathJax": "~2.5.3",
     "highlightjs": "~8.5.0",
-    "markedjs-extra": "*"
+    "markedjs-extra": "*",
+    "js-sequence-diagrams": "bramp/js-sequence-diagrams#~1.0.6",
+    "flowchart": "git@github.com:adrai/flowchart.js#~1.4.0"
   }
 }
