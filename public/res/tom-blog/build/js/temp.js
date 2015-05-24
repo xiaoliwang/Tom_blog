@@ -4,7 +4,7 @@
 $(function(){
     //////////////////////////////////ace的设置////////////////////
     //设置编辑器位置
-    var editor = ace.edit("md-editor");
+    editor = ace.edit("md-editor");
     //设置皮肤和语言
     editor.setTheme("ace/theme/twilight");
     editor.getSession().setMode("ace/mode/markdown");
@@ -55,10 +55,58 @@ $(function(){
     });
 
 //////////////////////////////////////////////工具栏////////////////////////////////////////////////////
-    //字体加粗
+    //粗体文本
     $(".glyphicon-bold").click(function(){
-        var selectRange = editor.getSelectionRange();
+        insertVal('**');
     });
+
+    //斜体文本
+    $(".glyphicon-italic").click(function(){
+        insertVal('*');
+    });
+
+    //加粗或者斜体
+    function insertVal(mark){
+        //选取范围
+        var selectRange = editor.getSelectionRange();
+        var sr_start = selectRange.start;
+        var sr_end = selectRange.end;
+        var row_end = editor.session.getLine(sr_end.row).length; //选取行的末尾column值
+        //选取范围的值
+        var val = editor.session.getTextRange(selectRange);
+        val = $.trim(val.replace(/\n/g,'').replace(/\*/g,'\\*'));
+
+        //是否已经为加粗或斜体文本
+        if(sr_start.column > (mark.length - 1)
+            && sr_end.column < (row_end - mark.length + 1)){
+            var newRange = selectRange.clone();
+            newRange.setStart(sr_start.row,sr_start.column - mark.length);
+            newRange.setEnd(sr_end. row,sr_end.column + mark.length);
+            var newVal = editor.session.getTextRange(newRange);
+            var escape_mark = mark.replace(/\*/g,'\\*');
+            var regular_express = new RegExp(escape_mark+'.*'+escape_mark);
+            if(regular_express.test(newVal)){
+                editor.selection.setSelectionRange(newRange);
+                mark = '';
+            }else{
+                val = val || (mark.length === 2?'粗体文本'
+                    :'斜体文本');
+            }
+        }else{
+            val = val || (mark.length === 2?'粗体文本'
+                :'斜体文本');
+        }
+        //插入新文本
+        editor.insert(mark + val + mark);
+        //设置选取范围
+        var cursor = editor.selection.getCursor();
+        var c_row = cursor.row;
+        var c_column = cursor.column;
+        selectRange.setStart(c_row,c_column - mark.length - val.length);
+        selectRange.setEnd(c_row,c_column - mark.length);
+        editor.selection.setSelectionRange(selectRange);
+        editor.focus();
+    }
 
     /*$(".glyphicon-bold").click(function(){
         //获取选取位置的range
