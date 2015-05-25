@@ -65,6 +65,41 @@ $(function(){
         insertVal('*');
     });
 
+    //添加链接
+    $("#add_link_sure").click(function(){
+        //关闭模态框
+        $('#linkModal').modal('hide');
+        //处理选择内容
+        var selectRange = editor.getSelectionRange();
+        var s_val = editor.session.getTextRange(selectRange);
+        s_val = $.trim(s_val.replace(/\n/g,''));
+        s_val = s_val || '此处输入链接的描述';   //描述的值
+        //处理输入网址并插入
+        var link_val = $('#link_value').val();  //网址
+        editor.insert('['+s_val+']('+link_val+')');
+        //设置选取框
+        var cursor = editor.selection.getCursor();
+        var nsc_end = cursor.column - link_val.length - 3;
+        var nsc_begin = nsc_end - s_val.length;
+        selectRange.setStart(cursor.row, nsc_begin);
+        selectRange.setEnd(cursor.row, nsc_end);
+        editor.selection.setSelectionRange(selectRange);
+        editor.focus();
+    });
+
+    //关闭模态框，清空输入框
+    $('#linkModal').on('hidden.bs.modal',function(e){
+        $('#link_value').val('');
+    });
+
+    //添加段落
+    $('.glyphicon-chevron-right').click(function(){
+        var selectRange = editor.getSelectionRange();
+        var s_val = editor.session.getTextRange(selectRange);
+        s_val = $.trim(s_val.replace(/\n/g,''));
+    });
+
+//////////////////////////////////////////////////tool function////////////////////////////////
     //加粗或者斜体
     function insertVal(mark){
         //选取范围
@@ -75,7 +110,6 @@ $(function(){
         //选取范围的值
         var val = editor.session.getTextRange(selectRange);
         val = $.trim(val.replace(/\n/g,'').replace(/\*/g,'\\*'));
-
         //是否已经为加粗或斜体文本
         if(sr_start.column > (mark.length - 1)
             && sr_end.column < (row_end - mark.length + 1)){
@@ -108,37 +142,7 @@ $(function(){
         editor.focus();
     }
 
-    /*$(".glyphicon-bold").click(function(){
-        //获取选取位置的range
-        var selectRange = editor.getSelectionRange();
-        //获取range中的值
-        var selectVal = editor.session.getTextRange(selectRange);
-        selectVal = selectVal.replace(/\n/g,'');
-        if(selectVal.replace(/\s/g,'')){
-            if(1) {
-                editor.insert(selectVal);
-                var n_c_column = cursor_position.column;
-                var n_c_column = cursor_position.column;
-                var n_c_row = cursor_position.row;
-                selectRange.setStart(n_c_row, n_c_column - selectVal.length);
-                selectRange.setEnd(n_c_row, n_c_column);
-                editor.selection.setSelectionRange(bigRange, true);
-            } else{
-                editor.insert("**"+selectVal+"**");
-                var n_c_column = cursor_position.column;
-                var n_c_column = cursor_position.column;
-                var n_c_row = cursor_position.row;
-                selectRange.setStart(n_c_row, n_c_column - selectVal.length - 2);
-                selectRange.setEnd(n_c_row, n_c_column - 2);
-                editor.selection.setSelectionRange(bigRange, true);
-            }
-        }else{
-            //editor.insert("**粗体文本**");
-            editor.moveCursorTo(0,1, false);
-            editor.selection.moveCursorTo(0,2,true);
-            editor.focus();
-        }
-    });*/
+
 });
 
 //ACE

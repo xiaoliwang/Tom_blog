@@ -7,12 +7,12 @@
             <li class="md-button"><span title="粗体" class="glyphicon glyphicon-bold"></span></li>
             <li class="md-button"><span title="斜体" class="glyphicon glyphicon-italic"></span></li>
             <li class="md-spacer"></li>
-            <li class="md-button"><span class="glyphicon glyphicon-link"></span></li>
-            <li class="md-button"><span class="glyphicon glyphicon-chevron-right"></span></li>
+            <li class="md-button"><span title="超链接" class="glyphicon glyphicon-link" data-toggle="modal" data-target="#linkModal"></span></li>
+            <li class="md-button"><span title="段落引用" class="glyphicon glyphicon-chevron-right"></span></li>
             <li class="md-button"><span class="glyphicon glyphicon-console"></span></li>
             <li class="md-button"><span class="glyphicon glyphicon-picture"></span></li>
             <li class="md-spacer"></li>
-            <li class="md-button"><span class="glyphicon glyphicon-list"></span></li>
+            <li class="md-button"><span class="glyphicon glyphicon glyphicon-list-alt"></span></li>
             <li class="md-button"><span class="glyphicon glyphicon-list"></span></li>
             <li class="md-button"><span class="glyphicon glyphicon-header"></span></li>
             <li class="md-button"><span class="glyphicon glyphicon-option-horizontal"></span></li>
@@ -37,7 +37,35 @@
             <li class="md-button"><span class="glyphicon glyphicon-floppy-save"></span></li>
         </ul>
     </nav>
-    <div id="md-preview">
+    <!-- 预览内容 -->
+    <div id="md-preview"></div>
+</div>
+
+<!-- 链接弹出框 -->
+<div class="modal fade" id="linkModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="margin-top:250px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">链接</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">请输入链接地址:</label>
+                        <input type="text" class="form-control" id="link_value" placeholder='http://example.com/ "可选标题"' />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+                <button type="button" class="btn btn-primary" id="add_link_sure">确认
+                    <span class="glyphicon glyphicon-ok"></span>
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 
