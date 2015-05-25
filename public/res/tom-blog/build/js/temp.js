@@ -99,6 +99,11 @@ $(function(){
         s_val = $.trim(s_val.replace(/\n/g,''));
     });
 
+    //代码样例
+    $('.glyphicon-console').click(function(){
+        
+    });
+
 //////////////////////////////////////////////////tool function////////////////////////////////
     //加粗或者斜体
     function insertVal(mark){
