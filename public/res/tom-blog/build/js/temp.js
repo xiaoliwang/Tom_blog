@@ -26,6 +26,9 @@ $(function(){
     });
 
     /////////////////////////////////////开始监听//////////////////////////
+    //刷新不丢失数据
+    editor.insert(sessionStorage.getItem('key'));
+
     var trigger = {};
     editor.getSession().on('change',function(e){
         if(trigger){
@@ -34,6 +37,8 @@ $(function(){
         trigger = setTimeout(function(){
             //获取初始文本
             var value = editor.getValue();
+            //防止刷新丢失
+            sessionStorage.setItem('key',value);
             //marked渲染
             var afterMarked = marked(value);
             $("#md-preview").html(afterMarked);
@@ -65,6 +70,11 @@ $(function(){
         insertVal('*');
     });
 
+    //斜体文本
+    $(".glyphicon-minus").click(function(){
+        insertVal('~~');
+    });
+
     //添加链接
     $("#add_link_sure").click(function(){
         //关闭模态框
@@ -92,16 +102,37 @@ $(function(){
         $('#link_value').val('');
     });
 
-    //添加段落
+    //添加段落（未完成）
     $('.glyphicon-chevron-right').click(function(){
         var selectRange = editor.getSelectionRange();
         var s_val = editor.session.getTextRange(selectRange);
         s_val = $.trim(s_val.replace(/\n/g,''));
+        if(s_val){
+
+        }else{
+            if(selectRange.start.row){
+                editor.insert('\n> 段落引用\n');
+            }else{
+                editor.insert('> 段落引用');
+            }
+        }
     });
 
-    //代码样例
+    //代码样例（未完成）
     $('.glyphicon-console').click(function(){
-        
+
+    });
+
+    //保存代码
+    $('.glyphicon-floppy-save').click(function(){
+        var value = editor.getValue();
+        localStorage.setItem('test',value);
+    });
+
+    //获取代码
+    $('.glyphicon-cloud-upload').click(function(){
+        var value = localStorage.getItem('test',value);
+        editor.insert(value);
     });
 
 //////////////////////////////////////////////////tool function////////////////////////////////
@@ -128,12 +159,10 @@ $(function(){
                 editor.selection.setSelectionRange(newRange);
                 mark = '';
             }else{
-                val = val || (mark.length === 2?'粗体文本'
-                    :'斜体文本');
+                val = val || getText(mark);
             }
         }else{
-            val = val || (mark.length === 2?'粗体文本'
-                :'斜体文本');
+            val = val || getText(mark);
         }
         //插入新文本
         editor.insert(mark + val + mark);
@@ -145,6 +174,18 @@ $(function(){
         selectRange.setEnd(c_row,c_column - mark.length);
         editor.selection.setSelectionRange(selectRange);
         editor.focus();
+    }
+
+    //获取默认文本
+    function getText(mark){
+        switch(mark){
+            case '**':
+                return '粗体文本';
+            case '*':
+                return '斜体文本';
+            case '~~':
+                return '划掉文本';
+        }
     }
 
 
