@@ -26,9 +26,6 @@ $(function(){
     });
 
     /////////////////////////////////////开始监听//////////////////////////
-    //刷新不丢失数据
-    editor.insert(sessionStorage.getItem('key'));
-
     var trigger = {};
     editor.getSession().on('change',function(e){
         if(trigger){
@@ -58,6 +55,23 @@ $(function(){
             });
         },1000);
     });
+
+/////////////////////////////////////////刷新不丢失数据////////////////////////////////
+    editor.insert(sessionStorage.getItem('key'));
+    var versions = localStorage.getItem('test');
+    versions =  versions || $.parseJSON(versions);
+    /*
+    if(versions){
+        for(key in versions){
+            console.log(key);
+            console.log(versions);
+        }
+    }else{
+        $('.dropdown-menu').append('<li class="divider"></li>'+
+            '<li><a href="#">没有本地文档</a></li>'+
+        '<li class="divider"></li>');
+    }*/
+
 
 //////////////////////////////////////////////工具栏////////////////////////////////////////////////////
     //粗体文本
@@ -125,13 +139,25 @@ $(function(){
 
     //保存代码
     $('.glyphicon-floppy-save').click(function(){
+        var version = $('#local-version').val();
+        if(!version){
+            var lastId = localStorage.getItem('lastId') || 0;
+            var versionId = lastId + 1;
+            var version = 'version' + versionId;
+            $('#local-version').val(version);
+            var arr_version = localStorage.getItem('versions') || [];
+            arr_version.push(version);
+            localStorage.setItem('test',$.stringify(arr_version));
+        }
         var value = editor.getValue();
-        localStorage.setItem('test',value);
+        localStorage.setItem(version,value);
     });
 
     //获取代码
-    $('.glyphicon-cloud-upload').click(function(){
-        var value = localStorage.getItem('test',value);
+    $('.get-value').click(function(){
+        var version = $(this).attr('val');
+        var value = localStorage.getItem(version,value);
+        editor.selection.selectAll();
         editor.insert(value);
     });
 
@@ -187,7 +213,6 @@ $(function(){
                 return '划掉文本';
         }
     }
-
 
 });
 
