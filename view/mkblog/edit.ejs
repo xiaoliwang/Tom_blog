@@ -4,7 +4,7 @@
 <div id="md-left">
     <!-- 编辑器工具栏 -->
     <nav id="md-editor-bar" class = "md-nav">
-        <ul>
+        <ul class="md-button-group">
             <li class="md-spacer"></li>
             <li class="md-button"><span title="粗体" class="glyphicon glyphicon-bold"></span></li>
             <li class="md-button"><span title="斜体" class="glyphicon glyphicon-italic"></span></li>
@@ -31,7 +31,7 @@
 <!-- 预览界面 -->
 <div id="md-right">
     <nav id="md-preview-bar" class = "md-nav">
-        <ul>
+        <ul class="md-button-group">
             <li class="md-spacer"></li>
             <li class="md-button"><span>注册</span></li>
             <li class="md-button"><span>登陆</span></li>
@@ -73,6 +73,36 @@
                     <span class="glyphicon glyphicon-remove"></span>
                 </button>
                 <button type="button" class="btn btn-primary" id="add_link_sure">确认
+                    <span class="glyphicon glyphicon-ok"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 保存弹出框 -->
+<div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="margin-top:250px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">保存</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name" class="control-label">请输入标题:</label>
+                        <input type="text" class="form-control" id="blog_title" placeholder='"在此处输入标题"' />
+                        <label id="input_alert" style="color:red;font-size:12pt;" ></label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+                <button type="button" class="btn btn-primary" id="local_save_sure">确认
                     <span class="glyphicon glyphicon-ok"></span>
                 </button>
             </div>
