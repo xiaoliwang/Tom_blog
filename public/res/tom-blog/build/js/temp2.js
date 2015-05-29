@@ -6,12 +6,16 @@ function textTools(){
     //保存代码
     $('.glyphicon-floppy-save').click(function(){
         var version = $('#local-version').val();
-        if(!version)
+        if(!version){
             $('#saveModal').modal('show');
-        var value = editor.getValue();
-        localStorage.setItem(version,value);
+        }else{
+            var value = editor.getValue();
+            localStorage.setItem(version,value);
+            $('#saveStatus').modal('show');
+        }
     });
 
+    //保存弹出框
     $('#local_save_sure').click(function(){
         var title = $.trim($('#blog_title').val());
         if(title){
@@ -29,26 +33,42 @@ function textTools(){
             arr_version[version] = title;
             localStorage.setItem('arr_versions',JSON.stringify(arr_version));
             //插入本地版本管理
-            $('.dropdown-menu').append('<li><a href="#" class="get-version-value" val="' +
+            if($('#empty-menu').attr('val')){
+                $('.dropdown-menu').html('');
+                $('.dropdown-menu').prepend('<li><a href="#" id="delete-all-versions">删除所有本地文档</li>');
+                $('.dropdown-menu').prepend('<li class="divider"></li>');
+            }
+            $('.dropdown-menu').prepend('<li><a href="#" class="get-version-value" val="' +
                 version+ '">' + title +
                 '</a></li>');
+            $('#saveStatus').modal('show');
         }else{
             $('#input_alert').text('请填写标题');
             $('#blog_title').focus();
         }
     });
 
-    //获取代码
-    $('.get-version-value').click(function(){
-        var version = $(this).attr('val');
-        $('#local-version').val(version);
-        sessionStorage.setItem('local-version',version);
-        editor.selection.selectAll();
-        editor.insert(localStorage.getItem(version));
-    });
-
     $('#saveModal').on('hidden.bs.modal',function(e){
         $('#save_title').val('');
         $('#input_alert').text('');
     });
+
+    //获取代码
+    $('.get-version-value').click(function(){
+        //获取版本号
+        var version = $(this).attr('val');
+        //更新本地版本
+        $('#local-version').val(version);
+        sessionStorage.setItem('local-version',version);
+        //插入新文本
+        editor.selection.selectAll();
+        editor.insert(localStorage.getItem(version));
+    });
+
+    $('#delete-all-versions').click(function(){
+        localStorage.clear();
+        sessionStorage.clear();
+        $('#local-version').val('');
+    });
+
 }

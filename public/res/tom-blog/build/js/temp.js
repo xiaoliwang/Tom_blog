@@ -53,7 +53,7 @@ $(function(){
                 var diagram = flowchart.parse(str_flow);
                 diagram.drawSVG(id);
             });
-        },1000);
+        },500);
     });
 
 /////////////////////////////////////////刷新不丢失数据////////////////////////////////////////
@@ -65,15 +65,19 @@ $(function(){
     versions =  versions && JSON.parse(versions);
     if(versions){
         console.log(versions);
+        $('.dropdown-menu').prepend('<li><a href="#" id="delete-all-versions">删除所有本地文档</li>');
+        $('.dropdown-menu').prepend('<li class="divider"></li>');
         for(key in versions){
-            $('.dropdown-menu').append('<li><a href="#" class="get-version-value" val="' +
+            $('.dropdown-menu').prepend('<li><a href="#" class="get-version-value" val="' +
                 key+ '">' + versions[key] +
                 '</a></li>');
         }
     }else{
-        $('.dropdown-menu').append('<li class="divider"></li>'+
-            '<li><a href="#">没有本地文档</a></li>'+
-            '<li class="divider"></li>');
+        $('.dropdown-menu').append(
+            '<li class="divider"></li>'+
+            '<li><a href="#" id="empty-menu" val="1">没有本地文档</a></li>'+
+            '<li class="divider"></li>'
+        );
     }
 
 
