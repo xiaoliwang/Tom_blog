@@ -64,20 +64,13 @@ $(function(){
     var versions = localStorage.getItem('arr_versions');
     versions =  versions && JSON.parse(versions);
     if(versions){
-        console.log(versions);
-        $('.dropdown-menu').prepend('<li><a href="#" id="delete-all-versions">删除所有本地文档</li>');
-        $('.dropdown-menu').prepend('<li class="divider"></li>');
+        $('#no-menu').hide();
+        $('#has-menu').show();
         for(key in versions){
-            $('.dropdown-menu').prepend('<li><a href="#" class="get-version-value" val="' +
+            $('#has-menus').prepend('<li><a href="#" class="get-version-value" val="' +
                 key+ '">' + versions[key] +
-                '</a></li>');
+                '<span onclick="test()" aria-hidden="true">&times;</span></a></li>');
         }
-    }else{
-        $('.dropdown-menu').append(
-            '<li class="divider"></li>'+
-            '<li><a href="#" id="empty-menu" val="1">没有本地文档</a></li>'+
-            '<li class="divider"></li>'
-        );
     }
 
 

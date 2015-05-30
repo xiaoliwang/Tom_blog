@@ -40,9 +40,19 @@
             <li class="md-button"><span title="同步" class="glyphicon glyphicon-cloud-upload"></span></li>
             <li class="md-button"><span title="发步" class="glyphicon glyphicon-send"></span></li>
             <li class="md-button">
-                <div class="dropdown">
+                <div id="no-menu" class="dropdown">
                     <span title="本地文稿" class="glyphicon glyphicon-align-justify dropdown-toggle" data-toggle="dropdown" aria-expanded="false"></span>
                     <ul class="dropdown-menu" role="menu">
+                        <li class="divider"></li>
+                        <li><a href="#" id="empty-menu" val="1">没有本地文档</a></li>
+                        <li class="divider"></li>
+                    </ul>
+                </div>
+                <div id="has-menu" class="dropdown" style="display:none">
+                    <span title="本地文稿" class="glyphicon glyphicon-align-justify dropdown-toggle" data-toggle="dropdown" aria-expanded="false"></span>
+                    <ul id="has-menus" class="dropdown-menu" role="menu">
+                        <li class="divider"></li>
+                        <li><a href="#" id="delete-all-versions">删除所有本地文档</a></li>
                     </ul>
                 </div>
             </li>
@@ -58,7 +68,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">链接</h4>
+                <h4 class="modal-title">链接</h4>
             </div>
             <div class="modal-body">
                 <form>
@@ -87,14 +97,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">保存</h4>
+                <h4 class="modal-title">保存</h4>
             </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group">
                         <label for="recipient-name" class="control-label">请输入标题:</label>
                         <input type="text" class="form-control" id="blog_title" placeholder='"在此处输入标题"' />
-                        <label id="input_alert" style="color:red;font-size:12pt;" ></label>
+                        <label style="color:red;font-size:12pt;" ></label>
                     </div>
                 </form>
             </div>
@@ -121,6 +131,29 @@
 <div class="modal fade" id="updateStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="margin-top:250px;">
         <div class="alert alert-success" role="alert" style="text-align:center;">替换成功</div>
+    </div>
+</div>
+
+<!-- 删除弹出框 -->
+<div class="modal fade" id="deleteAllStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" style="margin-top:250px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h5 class="modal-title">删除</h5>
+            </div>
+            <div class="modal-body">
+                <h5 class="modal-title" align="center">你确认要删除所有吗？</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+                <button type="button" class="btn btn-primary" id="delete_all_sure">确认
+                    <span class="glyphicon glyphicon-ok"></span>
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 

@@ -33,12 +33,11 @@ function textTools(){
             arr_version[version] = title;
             localStorage.setItem('arr_versions',JSON.stringify(arr_version));
             //插入本地版本管理
-            if($('#empty-menu').attr('val')){
-                $('.dropdown-menu').html('');
-                $('.dropdown-menu').prepend('<li><a href="#" id="delete-all-versions">删除所有本地文档</li>');
-                $('.dropdown-menu').prepend('<li class="divider"></li>');
+            if(!$('#no-menu').is(":hidden")){
+                $('#no-menu').hide();
+                $('#has-menu').show();
             }
-            $('.dropdown-menu').prepend('<li><a href="#" class="get-version-value" val="' +
+            $('#has-menus').prepend('<li><a href="#" class="get-version-value" val="' +
                 version+ '">' + title +
                 '</a></li>');
             $('#saveStatus').modal('show');
@@ -66,9 +65,21 @@ function textTools(){
     });
 
     $('#delete-all-versions').click(function(){
+       $('#deleteAllStatus').modal('show');
+    });
+
+    $('#delete_all_sure').click(function(){
         localStorage.clear();
         sessionStorage.clear();
         $('#local-version').val('');
+        $('#no-menu').show();
+        $('#has-menu').hide();
+        $('#has-menus').find('.get-version-value').remove();
+        $('#deleteAllStatus').modal('hide');
     });
 
+}
+
+function test(){
+    alert('hello');
 }
