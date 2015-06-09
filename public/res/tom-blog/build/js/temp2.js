@@ -3,7 +3,7 @@
  */
 function textTools(){
 
-    //保存代码
+    //更新代码或者打开弹出框
     $('.glyphicon-floppy-save').click(function(){
         var version = $('#local-version').val();
         if(!version){
@@ -32,6 +32,9 @@ function textTools(){
             var arr_version = JSON.parse(localStorage.getItem('arr_versions')) || {};
             arr_version[version] = title;
             localStorage.setItem('arr_versions',JSON.stringify(arr_version));
+            //保存内容
+            var value = editor.getValue();
+            localStorage.setItem(version,value);
             //插入本地版本管理
             if(!$('#no-menu').is(":hidden")){
                 $('#no-menu').hide();
@@ -48,7 +51,7 @@ function textTools(){
     });
 
     $('#saveModal').on('hidden.bs.modal',function(e){
-        $('#save_title').val('');
+        $('#blog_title').val('');
         $('#input_alert').text('');
     });
 
@@ -78,8 +81,8 @@ function textTools(){
         $('#deleteAllStatus').modal('hide');
     });
 
-}
+    window.deleteById = function(versionId){
+        localStorage.removeItem(versionId);
+    }
 
-function test(){
-    alert('hello');
 }
