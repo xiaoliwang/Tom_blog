@@ -34,6 +34,11 @@ $(function(){
         trigger = setTimeout(function(){
             //获取初始文本
             var value = editor.getValue();
+            var version =  $('#local-version').val();
+
+            //同一个版本保持一致
+            version && store.emit(version,value);
+
             //防止刷新丢失
             sessionStorage.setItem('edtionValue',value);
             //marked渲染
@@ -59,7 +64,14 @@ $(function(){
 /////////////////////////////////////////刷新不丢失数据////////////////////////////////////////
     var editorValue = sessionStorage.getItem('edtionValue');
     editor.insert(editorValue);
-    $('#local-version').val(sessionStorage.getItem('local-version'));
+    var version = sessionStorage.getItem('local-version');
+    $('#local-version').val(version);
+
+    //同一个版本保持一致
+    store.on(version,function(value){
+        editor.selection.selectAll();
+        editor.insert(value);
+    });
 
     var versions = localStorage.getItem('arr_versions');
     versions =  versions && JSON.parse(versions);

@@ -10,7 +10,7 @@ function textTools(){
             $('#saveModal').modal('show');
         }else{
             var value = editor.getValue();
-            localStorage.setItem(version,value);
+            store.set(version, value);
             $('#saveStatus').modal('show');
         }
     });
