@@ -3,7 +3,7 @@
  */
 function textTools(){
 
-    //保存代码
+    //更新代码或者打开弹出框
     $('.glyphicon-floppy-save').click(function(){
         var version = $('#local-version').val();
         if(!version){
@@ -55,7 +55,7 @@ function textTools(){
     });
 
     $('#saveModal').on('hidden.bs.modal',function(e){
-        $('#save_title').val('');
+        $('#blog_title').val('');
         $('#input_alert').text('');
     });
 
