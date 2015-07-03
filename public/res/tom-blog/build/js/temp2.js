@@ -22,19 +22,23 @@ function textTools(){
             //关闭模态框
             $('#saveModal').modal('hide');
             //获取新的id
-            var lastId = parseInt(localStorage.getItem('lastId')) || 0;
-            localStorage.setItem('lastId',++lastId);
+
+            var lastId = store.get('lastId') || 0;
+            store.set('lastId',++lastId);
             //设置版本
             var version = 'version' + lastId;
             $('#local-version').val(version);
-            sessionStorage.setItem('local-version',version);
+            store.set('local-version',version);
+
+            eventId = store.on(version,function(value){
+                editor.selection.selectAll();
+                editor.insert(value);
+            });
+
             //版本管理设置
-            var arr_version = JSON.parse(localStorage.getItem('arr_versions')) || {};
+            var arr_version = store.get('arr_versions') || {};
             arr_version[version] = title;
-            localStorage.setItem('arr_versions',JSON.stringify(arr_version));
-            //保存内容
-            var value = editor.getValue();
-            localStorage.setItem(version,value);
+            store.set('arr_versions',arr_version);
             //插入本地版本管理
             if(!$('#no-menu').is(":hidden")){
                 $('#no-menu').hide();
@@ -65,6 +69,12 @@ function textTools(){
         //插入新文本
         editor.selection.selectAll();
         editor.insert(localStorage.getItem(version));
+        //更换监听
+        store.off(eventId);
+        eventId = store.on(version,function(value){
+            editor.selection.selectAll();
+            editor.insert(value);
+        });
     });
 
     $('#delete-all-versions').click(function(){
@@ -79,10 +89,8 @@ function textTools(){
         $('#has-menu').hide();
         $('#has-menus').find('.get-version-value').remove();
         $('#deleteAllStatus').modal('hide');
+        store.off(eventId);
+        store.emit('delete_all');
     });
-
-    window.deleteById = function(versionId){
-        localStorage.removeItem(versionId);
-    }
 
 }

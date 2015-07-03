@@ -2,13 +2,16 @@
  * Created by 杰朋 on 2015/5/20.
  */
 $(function(){
-    //////////////////////////////////ace的设置////////////////////
+    //////////////////////////////定义全局变量////////////////////
+    var win = window;
+    win.eventId = '';
     //设置编辑器位置
-    editor = ace.edit("md-editor");
+    win.editor = ace.edit("md-editor");
+    //////////////////////////////编辑器的设置////////////////////
     //设置皮肤和语言
     editor.setTheme("ace/theme/twilight");
     editor.getSession().setMode("ace/mode/markdown");
-    editor.getSession().setUseWrapMode(true);//自动换行
+    editor.getSession().setUseWrapMode(true);           //自动换行
     //设置编辑字体大小
     document.getElementById('md-editor').style.fontSize='20px';
 
@@ -40,7 +43,7 @@ $(function(){
             version && store.emit(version,value);
 
             //防止刷新丢失
-            sessionStorage.setItem('edtionValue',value);
+            sessionStorage.setItem('session_edit_value',value);
             //marked渲染
             var afterMarked = marked(value);
             $("#md-preview").html(afterMarked);
@@ -62,19 +65,31 @@ $(function(){
     });
 
 /////////////////////////////////////////刷新不丢失数据////////////////////////////////////////
-    var editorValue = sessionStorage.getItem('edtionValue');
+    var editorValue = sessionStorage.getItem('session_edit_value');
     editor.insert(editorValue);
     var version = sessionStorage.getItem('local-version');
     $('#local-version').val(version);
 
     //同一个版本保持一致
-    store.on(version,function(value){
-        editor.selection.selectAll();
-        editor.insert(value);
+    if(version){
+        eventId = store.on(version,function(value){
+            editor.selection.selectAll();
+            editor.insert(value);
+        });
+    }
+
+    store.on('delete_all',function(){
+        localStorage.clear();
+        sessionStorage.clear();
+        $('#local-version').val('');
+        $('#no-menu').show();
+        $('#has-menu').hide();
+        $('#has-menus').find('.get-version-value').remove();
+        $('#deleteAllStatus').modal('hide');
+        store.off(eventId);
     });
 
-    var versions = localStorage.getItem('arr_versions');
-    versions =  versions && JSON.parse(versions);
+    var versions = store.get('arr_versions');
     if(versions){
         $('#no-menu').hide();
         $('#has-menu').show();
@@ -91,6 +106,7 @@ $(function(){
     textTools();
 
 });
+
 
 //ACE
 
