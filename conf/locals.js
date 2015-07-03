@@ -4,7 +4,7 @@
 var locals = {
     meta_keywords: 'tset',
     meta_description: 'test',
-    host: 'http://localhost:3000/'
+    host: 'http://localhost:3001/'
 }
 
 module.exports = locals;
